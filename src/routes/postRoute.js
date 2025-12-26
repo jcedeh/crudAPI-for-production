@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/create-post', auth, newPost);
 router.get('/admin-get', auth, authorizeRole('admin'), adminGetPosts);
-router.delete('/admin-delete', authorizeRole('admin'), adminDeletePost);
+router.delete('/admin-delete/:id', auth, authorizeRole('admin'), adminDeletePost);
 router.get('/get-posts', auth, getPosts);
 router.get('/:id', auth, getPostsById);
 router.put('/:id', auth, updatePost);

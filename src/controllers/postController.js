@@ -51,7 +51,7 @@ export const getPostsById = async (req, res)=> {
    
     try {
         const id = req.params.id;
-        console.log(id);
+        
         const post = await Post.findOne({_id:id, author: req.user.id}).select('-password');
         if(!post) {
             return res.status(404).json({message: "post not found or you are not authorized"});
@@ -126,17 +126,18 @@ export const adminGetPosts = async (req, res)=> {
 }
 
 export const adminDeletePost = async (req, res)=> {
-    id = req.params.id;
+    const id = req.params.id;
     try {
-        existingPost = await Post.findOne({_id:id}).select('-password');
+        const existingPost = await Post.findOne({_id:id}).select('-password');
         if(!existingPost) {
             return res.status(404).json({message: "post not found"});
         }
         //delete the post
         const deleted = await Post.findOneAndDelete({_id:id});
-        return res.status(400).json({message: "post deleted by Admin"})
+        return res.status(200).json({message: "post deleted by Admin"})
     }
     catch(err){
-        return res.status(400).json({message: "internal server error", err});
+        console.error(err)
+        return res.status(500).json({message: "internal server error", err});
     }
 }

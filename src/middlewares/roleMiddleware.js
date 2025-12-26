@@ -2,8 +2,8 @@
 export const authorizeRole = (...roles)=> {
    try{
      return (req, res, next)=> {
-        if(roles !== 'admin') {
-            return res.status(401).json({messsage: "you are not allowed"});
+        if(!roles.includes(req.user.role)) {
+            return res.status(403).json({messsage: "you are not allowed"});
         }
         next();
     }

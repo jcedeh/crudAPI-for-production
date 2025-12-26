@@ -49,7 +49,9 @@ export const loginUser = async(req, res)=> {
         }
         //assign a token to the user
         const token = jwt.sign({id: existingUser.id, role: existingUser.role}, process.env.JWT_SECRET, {expiresIn: '1h'});
+        
         return res.status(200).json({message: "login successful", token});
+        
 
     }
     catch(err){
